@@ -1,0 +1,114 @@
+# uncertainty.kv
+
+<BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0.7, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<UncertaintyApp>:
+    title_label: title_label
+    num_measurements_input: num_measurements_input
+    measurements_input: measurements_input
+    num_parameters_input: num_parameters_input
+    uncertainties_input: uncertainties_input
+    calculate_button: calculate_button
+    result_label: result_label
+    reset_button: reset_button
+    save_button: save_button
+
+    orientation: 'vertical'
+    padding: 10
+    spacing: 10
+
+    Label:
+        id: title_label
+        text: 'Uncertainty Calculation'
+        font_size: 24
+        bold: True
+        color: 0, 0.7, 1, 1
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+
+        Label:
+            text: 'Type A Uncertainty'
+            color: 0, 0.7, 1, 1
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: num_measurements_input
+            hint_text: 'Number of measurements'
+            multiline: False
+            on_text_validate: root.next_input()
+
+        TextInput:
+            id: measurements_input
+            hint_text: 'Measurements (comma-separated)'
+            multiline: False
+            on_text_validate: root.next_input()
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+
+        Label:
+            text: 'Type B Uncertainty'
+            color: 0, 0.7, 1, 1
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: num_parameters_input
+            hint_text: 'Number of parameters'
+            multiline: False
+            on_text_validate: root.next_input()
+
+        TextInput:
+            id: uncertainties_input
+            hint_text: 'Uncertainties (comma-separated)'
+            multiline: False
+            on_text_validate: root.next_input()
+
+    Button:
+        id: calculate_button
+        text: 'Calculate Uncertainty'
+        size_hint_y: None
+        height: 40
+        background_color: 0, 0.7, 1, 1
+        on_press: root.calculate_uncertainty(self)
+
+    Label:
+        id: result_label
+        text: ''
+        size_hint_y: None
+        height: 150
+        font_size: 16
+        halign: 'left'
+        valign: 'top'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 10
+        size_hint_y: None
+        height: 50
+
+        Button:
+            id: reset_button
+            text: 'Reset'
+            size_hint_x: None
+            width: 100
+            background_color: 1, 0.5, 0, 1
+            on_press: root.reset_inputs(self)
+
+        Button:
+            id: save_button
+            text: 'Save Result'
+            size_hint_x: None
+            width: 120
+            background_color: 0, 1, 0, 1
+            on_press: root.save_to_file(self)
